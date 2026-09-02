@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rocchietti Studio — Packages &amp; Pricing</title>
+<meta name="description" content="Logo, identity and full brand systems for founders, creators and small businesses. Fixed packages, explicit deliverables, no hourly billing. From €490." />
+<meta property="og:title" content="Rocchietti Studio — Brand Design Packages" />
+<meta property="og:description" content="Fixed packages, explicit deliverables, no hourly billing. From €490." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Caveat+Brush&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:    '#3E2A21',
+          brown:  '#5C3A2E',
+          cream:  '#FDFBF6',
+          lemon:  '#F8E7A1',
+          lemon2: '#FBF1CA',
+          peri:   '#C7D0EE',
+          peri2:  '#E4E9F9',
+          grid:   '#D3DDF2'
+        },
+        fontFamily: {
+          sans:   ['Quicksand', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          script: ['Caveat', 'ui-serif', 'cursive'],
+          brush:  ['"Caveat Brush"', 'Caveat', 'cursive']
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --ink:#3E2A21; --brown:#5C3A2E; --cream:#FDFBF6;
+    --grid:#D3DDF2; --lemon:#F8E7A1; --peri:#C7D0EE;
+  }
+  html{ scroll-behavior:smooth; overflow-x:clip; }
+  body{ background:var(--cream); color:var(--ink); overflow-x:hidden; }
+  section[id]{ scroll-margin-top:96px; }
+
+  /* --- paper --- */
+  .paper-grid{
+    background-color:var(--cream);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:26px 26px;
+  }
+  /* masked grid lives on a pseudo-element so the fade never touches the content */
+  .paper-grid-soft{ position:relative; background-color:var(--cream); }
+  .paper-grid-soft::before{
+    content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image:radial-gradient(120% 90% at 50% 10%, #000 40%, transparent 100%);
+            mask-image:radial-gradient(120% 90% at 50% 10%, #000 40%, transparent 100%);
+  }
+
+  /* --- highlighter --- */
+  .hl{ position:relative; display:inline-block; z-index:0; }
+  .hl::before{
+    content:''; position:absolute; left:-.14em; right:-.14em; top:.16em; bottom:.02em;
+    background:var(--lemon); border-radius:.4em .55em .45em .5em; z-index:-1;
+    transform:scaleX(0); transform-origin:left center;
+    transition:transform .75s cubic-bezier(.2,.8,.2,1);
+  }
+  .hl.is-on::before{ transform:scaleX(1); }
+
+  /* --- cards --- */
+  .card{
+    background:#fff; border:1.5px solid var(--ink); border-radius:24px;
+    box-shadow:6px 6px 0 var(--lemon);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .card:hover{ transform:translate(-3px,-3px); box-shadow:10px 10px 0 var(--lemon); }
+  .card-featured{ background:#F6F8FE; box-shadow:8px 8px 0 var(--peri); }
+  .card-featured:hover{ box-shadow:12px 12px 0 var(--peri); }
+  .card-dark{ background:var(--brown); color:var(--cream); box-shadow:6px 6px 0 var(--peri); }
+  .card-dark:hover{ box-shadow:10px 10px 0 var(--peri); }
+  .card-flat{ box-shadow:4px 4px 0 var(--peri); }
+  .card-flat:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--peri); }
+
+  /* --- buttons --- */
+  .btn{
+    display:inline-flex; align-items:center; gap:.5rem; border-radius:999px;
+    font-weight:600; letter-spacing:.01em; border:1.5px solid var(--ink);
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, background-color .25s, color .25s;
+  }
+  .btn-primary{ background:var(--brown); color:var(--cream); box-shadow:4px 4px 0 var(--lemon); }
+  .btn-primary:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--lemon); }
+  .btn-ghost{ background:transparent; color:var(--ink); box-shadow:4px 4px 0 var(--peri); }
+  .btn-ghost:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--peri); background:#fff; }
+  .btn:focus-visible, a:focus-visible, button:focus-visible{ outline:3px solid var(--peri); outline-offset:3px; }
+
+  /* --- stickers --- */
+  .sticker{ position:absolute; pointer-events:none; z-index:1; }
+  .drag-sticker{ cursor:grab; pointer-events:auto; touch-action:none; user-select:none; }
+  .drag-sticker:active{ cursor:grabbing; }
+
+  /* --- marquee --- */
+  .marquee{ overflow:hidden; }
+  .marquee-track{ display:flex; width:max-content; will-change:transform; }
+
+  /* --- misc --- */
+  .tape{
+    position:absolute; width:92px; height:26px; background:rgba(248,231,161,.85);
+    border:1px solid rgba(62,42,33,.18); top:-13px; left:50%; transform:translateX(-50%) rotate(-2.2deg);
+  }
+  .rule{ border-top:1.5px dashed rgba(62,42,33,.28); }
+  .faq-panel{ overflow:hidden; height:0; }
+  .photo-frame{
+    background-color:#fff;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:22px 22px;
+  }
+
+  /* real logo asset; white-background exports blend into the cream page */
+  .logo-mark{ mix-blend-mode:multiply; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .hl::before{ transform:scaleX(1); transition:none; }
+    .card, .btn{ transition:none; }
+  }
+</style>
+
+<script>
+  /* Logo: try SVG, then PNG, then fall back to the typeset wordmark. */
+  function logoFallback(img){
+    if (!img.dataset.triedPng) { img.dataset.triedPng = '1'; img.src = 'assets/rocchietti-logo.png'; return; }
+    img.style.display = 'none';
+    var f = img.parentElement.querySelector('.logo-fallback');
+    if (f) { f.classList.remove('hidden'); f.classList.add('flex'); }
+  }
+</script>
+</head>
+
+<body class="font-sans antialiased">
+
+<!-- ══════════════ NAV ══════════════ -->
+<header class="fixed top-0 inset-x-0 z-50">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 pt-4">
+    <nav class="flex items-center justify-between gap-4 rounded-full border-[1.5px] border-ink/90 bg-cream/85 backdrop-blur-md px-4 sm:px-5 py-2.5 shadow-[0_2px_0_rgba(62,42,33,.12)]">
+
+      <a href="#top" class="shrink-0" aria-label="Rocchietti Studio — home">
+        <img src="assets/rocchietti-logo.svg" alt="Rocchietti Studio"
+             class="logo-mark h-9 sm:h-11 w-auto" onerror="logoFallback(this)">
+        <span class="logo-fallback hidden flex-col items-start leading-none">
+          <span class="font-script text-[26px] sm:text-[30px] text-brown -mb-1.5 tracking-tight">Rocchietti</span>
+          <span class="font-script text-[12px] sm:text-[13px] text-brown/80 tracking-[.35em] pl-1">✳ studio ✳</span>
+        </span>
+      </a>
+
+      <div class="hidden sm:flex items-center gap-7 text-[14px] font-medium text-ink/75">
+        <a href="#packages" class="hover:text-ink transition">Packages</a>
+        <a href="#compare"  class="hover:text-ink transition">Compare</a>
+        <a href="#addons"   class="hover:text-ink transition">Add-ons</a>
+      </div>
+
+      <a data-book href="#book" class="btn btn-primary text-[13px] sm:text-sm px-4 sm:px-5 py-2">
+        Book a call <span aria-hidden="true">→</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ══════════════ PACKAGES ══════════════ -->
+<section id="packages" class="relative paper-grid border-b-[1.5px] border-ink/15 pt-32 sm:pt-44 pb-20 sm:pb-28 overflow-hidden">
+
+  <span class="sticker floater hidden md:block" style="top:9%; left:4%;"><span class="block h-14 w-14 rounded-full bg-lemon/70"></span></span>
+  <span class="sticker floater hidden md:block" style="top:6%; right:6%;"><span class="block h-9 w-9 rounded-full bg-peri/70"></span></span>
+
+  <div class="mx-auto max-w-6xl px-5">
+
+    <div class="relative z-10 text-center">
+      <p data-reveal class="inline-flex items-center gap-2 rounded-full border-[1.5px] border-ink/80 bg-white px-4 py-1.5 text-[10.5px] sm:text-[12.5px] font-semibold uppercase tracking-[.13em] sm:tracking-[.18em] text-ink/75">
+        <span class="hidden sm:block h-1.5 w-1.5 rounded-full bg-brown"></span> Rocchietti Studio · 2026 packages
+      </p>
+      <h2 data-reveal class="mt-7 text-[34px] sm:text-[50px] font-bold leading-[1.06] tracking-[-.02em]">
+        The <span class="hl font-brush font-normal text-brown text-[1.12em]">packages</span>
+      </h2>
+      <p data-reveal class="mx-auto mt-5 max-w-xl text-[17px] leading-relaxed text-ink/70">
+        Four ways in. Pick the one that matches where your business is right now —
+        or book a call and I'll tell you honestly which one you need.
+      </p>
+      <p data-reveal class="mx-auto mt-7 max-w-2xl rounded-2xl border-[1.5px] border-ink/15 bg-white/70 px-5 py-3.5 text-[14.5px] leading-relaxed text-ink/70">
+        Whichever one you pick, we always start with an introductory call — and the final quote is
+        built around what you actually need.
+      </p>
+    </div>
+
+    <div data-reveal-group class="relative z-10 mt-14 grid gap-7 lg:grid-cols-2">
+
+      <!-- 01 LOGO KIT -->
+      <article data-reveal class="card relative flex flex-col p-7 sm:p-8">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <span class="font-brush text-[24px] text-brown/70 leading-none">01</span>
+            <h3 class="mt-1 text-[28px] font-bold tracking-[-.01em]">Launch Kit</h3>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="block text-[32px] font-bold leading-none">€490</span>
+            <span class="block mt-1 text-[12px] font-semibold uppercase tracking-[.14em] text-ink/55">1–2 weeks</span>
+          </div>
+        </div>
+
+        <p class="mt-5 text-[15.5px] leading-relaxed text-ink/72">
+          <span class="font-semibold text-ink">For:</span> businesses opening now, creators and local shops that
+          need to look serious from day one.
+        </p>
+
+        <ul class="mt-6 mb-7 space-y-2.5 text-[15px] text-ink/80">
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Guided brief (form + 20-min call)</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>2 logo proposals, 1 direction developed</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Versions: primary, horizontal, monogram/icon</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Core colour palette (3–5 colours) + 1 font pairing</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Social profile pack — avatar and cover sized for Instagram, TikTok, LinkedIn and Facebook</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Light brand kit (5–8 pages) set up with your colours and fonts, plus a usage guide (do&#39;s &amp; don&#39;ts)</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Final files: SVG, PNG, PDF, JPG — light &amp; dark versions</span></li>
+        </ul>
+
+        <div class="rule mt-auto mb-6"></div>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13.5px] text-ink/65">
+          <span><span class="font-semibold text-ink">2</span> revision rounds included</span>
+          <span><span class="font-semibold text-ink">50%</span> upfront / <span class="font-semibold text-ink">50%</span> on delivery</span>
+        </div>
+        <p class="mt-5 rounded-2xl border-[1.5px] border-ink/15 bg-lemon/50 px-4 py-3 text-[13.5px] leading-relaxed text-ink/80">
+          Move up to <span class="font-semibold text-ink">Identity</span> within 30 days and your €490 comes off the price.
+        </p>
+        <a data-book href="#book" class="btn btn-ghost mt-7 justify-center px-6 py-3 text-[14.5px]">Book a call about the Launch Kit →</a>
+      </article>
+
+      <!-- 02 IDENTITY -->
+      <article data-reveal class="card card-featured relative flex flex-col p-7 sm:p-8">
+        <span class="absolute -top-3.5 left-7 rounded-full border-[1.5px] border-ink bg-lemon px-3.5 py-1 text-[11.5px] font-bold uppercase tracking-[.16em] text-ink">
+          Most chosen
+        </span>
+
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <span class="font-brush text-[24px] text-brown/70 leading-none">02</span>
+            <h3 class="mt-1 text-[28px] font-bold tracking-[-.01em]">Identity</h3>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="block text-[32px] font-bold leading-none">€990</span>
+            <span class="block mt-1 text-[12px] font-semibold uppercase tracking-[.14em] text-ink/55">2–3 weeks</span>
+          </div>
+        </div>
+
+        <p class="mt-5 text-[15.5px] leading-relaxed text-ink/72">
+          <span class="font-semibold text-ink">For:</span> businesses already up and running that need to stop
+          looking improvised.
+        </p>
+
+        <p class="mt-5 font-brush text-[19px] text-brown">Everything in the Launch Kit, plus:</p>
+
+        <ul class="mt-4 mb-7 space-y-2.5 text-[15px] text-ink/80">
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Moodboard + visual direction agreed before any drawing starts</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>One creative direction, developed properly — chosen with you, not guessed at</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Complete logo system (variants, clear space, minimum sizes)</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Extended palette with HEX / RGB / CMYK codes</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Type system (headings, body copy, hierarchy)</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Supporting graphic elements (patterns, textures, base iconography)</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>2 real-world applications, picked by you (e.g. Instagram post, business card, sign or packaging)</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span><span class="font-semibold text-ink">Brand guidelines PDF, 10–12 pages</span></span></li>
+        </ul>
+
+        <div class="rule mt-auto mb-6"></div>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13.5px] text-ink/65">
+          <span><span class="font-semibold text-ink">2</span> revision rounds included</span>
+          <span><span class="font-semibold text-ink">50%</span> / <span class="font-semibold text-ink">50%</span></span>
+        </div>
+        <a data-book href="#book" class="btn btn-primary mt-7 justify-center px-6 py-3 text-[14.5px]">Book a call about Identity →</a>
+      </article>
+
+      <!-- 03 BRAND SYSTEM -->
+      <article data-reveal class="card relative flex flex-col p-7 sm:p-8">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <span class="font-brush text-[24px] text-brown/70 leading-none">03</span>
+            <h3 class="mt-1 text-[28px] font-bold tracking-[-.01em]">Brand System</h3>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="block text-[32px] font-bold leading-none">€2,490</span>
+            <span class="block mt-1 text-[12px] font-semibold uppercase tracking-[.14em] text-ink/55">4–5 weeks</span>
+          </div>
+        </div>
+
+        <p class="mt-5 text-[15.5px] leading-relaxed text-ink/72">
+          <span class="font-semibold text-ink">For:</span> startups and companies with a team and several
+          touchpoints to keep consistent.
+        </p>
+
+        <p class="mt-5 font-brush text-[19px] text-brown">Everything in Identity, plus:</p>
+
+        <ul class="mt-4 mb-7 space-y-2.5 text-[15px] text-ink/80">
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Brand strategy workshop (90 min): positioning, audience, tone of voice, competitors</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Naming for payoff / tagline</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Two creative directions presented, one developed</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Full type system with scale and responsive rules</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Photographic art direction (guidelines + references)</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>6–8 applications (social kit, stationery, deck, packaging or signage)</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Editable templates handed over to you</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span><span class="font-semibold text-ink">Brand guidelines PDF, 25–30 pages</span></span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Handoff call (45 min) + 30 days of email support after delivery</span></li>
+        </ul>
+
+        <div class="rule mt-auto mb-6"></div>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13.5px] text-ink/65">
+          <span><span class="font-semibold text-ink">3</span> revision rounds included</span>
+          <span><span class="font-semibold text-ink">40%</span> kick-off / <span class="font-semibold text-ink">30%</span> direction approved / <span class="font-semibold text-ink">30%</span> delivery</span>
+        </div>
+        <a data-book href="#book" class="btn btn-ghost mt-7 justify-center px-6 py-3 text-[14.5px]">Book a call about Brand System →</a>
+      </article>
+
+      <!-- 04 CUSTOM -->
+      <article data-reveal class="card card-dark relative flex flex-col p-7 sm:p-8">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <span class="font-brush text-[24px] text-lemon/80 leading-none">04</span>
+            <h3 class="mt-1 text-[28px] font-bold tracking-[-.01em] text-cream">Custom</h3>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="block text-[30px] font-bold leading-none text-cream">On request</span>
+            <span class="block mt-1 text-[12px] font-semibold uppercase tracking-[.14em] text-cream/60">scoped per project</span>
+          </div>
+        </div>
+
+        <p class="mt-5 text-[15.5px] leading-relaxed text-cream/80">
+          <span class="font-semibold text-cream">For:</span> rebrands of established companies, multi-brand
+          portfolios, complex naming projects, brand + digital product, retail with many locations.
+        </p>
+
+        <p class="mt-6 text-[15px] leading-relaxed text-cream/80">
+          Scope is built around you after a discovery call. You get a precise written quote within
+          <span class="font-semibold text-cream">48 hours</span> of that call.
+        </p>
+
+        <div class="mt-7 mb-7 rounded-2xl border-[1.5px] border-cream/25 bg-cream/10 p-4">
+          <p class="font-brush text-[19px] leading-snug text-lemon">
+            “Some projects are too specific for a package. Let's talk, I'll work out what you actually
+            need and send you the exact scope within two days.”
+          </p>
+        </div>
+
+        <a data-book href="#book" class="btn mt-auto justify-center px-6 py-3 text-[14.5px] bg-cream text-ink border-cream shadow-[4px_4px_0_rgba(248,231,161,.55)] hover:-translate-x-0.5 hover:-translate-y-0.5">
+          Book a discovery call →
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ADD-ONS + RETAINER ══════════════ -->
+<section id="addons" class="paper-grid border-b-[1.5px] border-ink/15 py-20 sm:py-28">
+  <div class="mx-auto max-w-6xl px-5">
+
+    <div class="text-center">
+      <h2 data-reveal class="text-[32px] sm:text-[46px] font-bold leading-[1.08] tracking-[-.02em]">
+        Add-ons &amp; <span class="hl font-brush font-normal text-brown text-[1.12em]">ongoing care</span>
+      </h2>
+      <p data-reveal class="mx-auto mt-5 max-w-lg text-[17px] leading-relaxed text-ink/70">
+        Bolt these onto any package, or add them later when you need them.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-7 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
+
+      <!-- add-ons -->
+      <div data-reveal class="card p-2 sm:p-3">
+        <ul class="divide-y divide-ink/10">
+          <li class="flex items-center justify-between gap-6 px-5 py-4"><span class="text-[15.5px]">Social kit — 10 templates</span><span class="shrink-0 font-semibold">€290</span></li>
+          <li class="flex items-center justify-between gap-6 px-5 py-4"><span class="text-[15.5px]">Naming + payoff</span><span class="shrink-0 font-semibold">€390</span></li>
+          <li class="flex items-center justify-between gap-6 px-5 py-4"><span class="text-[15.5px]">Email signature + favicon and watermark</span><span class="shrink-0 font-semibold">€150</span></li>
+          <li class="flex items-center justify-between gap-6 px-5 py-4"><span class="text-[15.5px]">Packaging / label design</span><span class="shrink-0 font-semibold">from €390 per SKU</span></li>
+          <li class="flex items-center justify-between gap-6 px-5 py-4"><span class="text-[15.5px]">Menu, brochure, flyer</span><span class="shrink-0 font-semibold">€190 per page</span></li>
+          <li class="flex items-center justify-between gap-6 px-5 py-4"><span class="text-[15.5px]">Pitch deck template (12 slides)</span><span class="shrink-0 font-semibold">€390</span></li>
+          <li class="flex items-center justify-between gap-6 px-5 py-4"><span class="text-[15.5px]">Second creative direction</span><span class="shrink-0 font-semibold">€290</span></li>
+          <li class="flex items-center justify-between gap-6 px-5 py-4"><span class="text-[15.5px]">Extra revision round beyond the included ones</span><span class="shrink-0 font-semibold">€50 per hour</span></li>
+        </ul>
+      </div>
+
+      <!-- retainer -->
+      <div data-reveal class="card card-featured relative flex flex-col p-7 sm:p-8">
+        <span class="tape"></span>
+        <p class="font-brush text-[22px] text-brown">The one people keep</p>
+        <h3 class="mt-1 text-[28px] font-bold tracking-[-.01em]">Brand Care</h3>
+        <p class="mt-2 text-[32px] font-bold leading-none">€290<span class="text-[16px] font-semibold text-ink/60"> / month</span></p>
+
+        <p class="mt-5 text-[15.5px] leading-relaxed text-ink/75">
+          Your brand stays alive after handoff, without you having to brief a new designer every time
+          something comes up.
+        </p>
+
+        <ul class="mt-6 space-y-2.5 text-[15px] text-ink/80">
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>4 graphic assets per month (posts, stories, posters, adaptations)</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Reply within 48 hours</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>Source files always kept up to date</span></li>
+          <li class="flex gap-3"><span class="text-brown">✳</span><span>3-month minimum, then 30 days' notice to cancel</span></li>
+        </ul>
+
+        <a data-book href="#book" class="btn btn-primary mt-8 justify-center px-6 py-3 text-[14.5px]">Talk about Brand Care →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SUMMARY TABLE ══════════════ -->
+<section id="compare" class="py-20 sm:py-24">
+  <div class="mx-auto max-w-5xl px-5">
+    <h2 data-reveal class="text-center text-[30px] sm:text-[42px] font-bold leading-[1.08] tracking-[-.02em]">
+      Side by <span class="hl font-brush font-normal text-brown text-[1.12em]">side</span>
+    </h2>
+
+    <div data-reveal class="card mt-10 overflow-x-auto p-0">
+      <table class="w-full min-w-[620px] text-left">
+        <thead>
+          <tr class="border-b-[1.5px] border-ink/15 text-[12px] font-bold uppercase tracking-[.16em] text-ink/60">
+            <th class="px-6 py-5">Package</th>
+            <th class="px-6 py-5">Price</th>
+            <th class="px-6 py-5">Timeline</th>
+            <th class="px-6 py-5">Revisions</th>
+          </tr>
+        </thead>
+        <tbody class="text-[15.5px]">
+          <tr class="border-b border-ink/10">
+            <td class="px-6 py-4 font-semibold">Launch Kit</td>
+            <td class="px-6 py-4">€490</td><td class="px-6 py-4 text-ink/70">1–2 weeks</td><td class="px-6 py-4 text-ink/70">2</td>
+          </tr>
+          <tr class="border-b border-ink/10 bg-peri2/60">
+            <td class="px-6 py-4 font-semibold">Identity <span class="ml-1.5 align-middle rounded-full bg-lemon px-2 py-0.5 text-[10.5px] font-bold uppercase tracking-[.12em]">most chosen</span></td>
+            <td class="px-6 py-4 font-semibold">€990</td><td class="px-6 py-4 text-ink/70">2–3 weeks</td><td class="px-6 py-4 text-ink/70">2</td>
+          </tr>
+          <tr class="border-b border-ink/10">
+            <td class="px-6 py-4 font-semibold">Brand System</td>
+            <td class="px-6 py-4">€2,490</td><td class="px-6 py-4 text-ink/70">4–5 weeks</td><td class="px-6 py-4 text-ink/70">3</td>
+          </tr>
+          <tr class="border-b border-ink/10">
+            <td class="px-6 py-4 font-semibold">Custom</td>
+            <td class="px-6 py-4">On request</td><td class="px-6 py-4 text-ink/70">per scope</td><td class="px-6 py-4 text-ink/70">agreed in quote</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 font-semibold">Brand Care</td>
+            <td class="px-6 py-4">€290 / month</td><td class="px-6 py-4 text-ink/70">min. 3 months</td><td class="px-6 py-4 text-ink/70">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-reveal class="mx-auto mt-5 max-w-xl text-center text-[13.5px] leading-relaxed text-ink/60">
+      Start with the Launch Kit and move up to Identity within 30 days — the €490 comes off the price.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="paper-grid py-12">
+  <div class="mx-auto max-w-6xl px-5">
+    <div class="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
+      <div class="shrink-0">
+        <img src="assets/rocchietti-logo.svg" alt="Rocchietti Studio"
+             class="logo-mark h-12 w-auto" onerror="logoFallback(this)">
+        <span class="logo-fallback hidden flex-col items-center sm:items-start leading-none">
+          <span class="font-script text-[30px] text-brown -mb-1.5">Rocchietti</span>
+          <span class="font-script text-[13px] text-brown/80 tracking-[.35em] pl-1">✳ studio ✳</span>
+        </span>
+      </div>
+
+      <nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[14px] text-ink/65">
+        <a href="#packages" class="hover:text-ink transition">Packages</a>
+        <a href="#compare" class="hover:text-ink transition">Compare</a>
+        <a href="#addons" class="hover:text-ink transition">Add-ons</a>
+        <a data-book href="#" class="hover:text-ink transition">Book a call</a>
+        <a data-email href="#" class="hover:text-ink transition">Email</a>
+      </nav>
+    </div>
+
+    <div class="rule my-8"></div>
+    <p class="text-center text-[13px] text-ink/50">
+      Quote valid 30 days from the date it is sent.
+      &nbsp;·&nbsp; © <span id="year"></span> Rocchietti Studio
+    </p>
+  </div>
+</footer>
+</main>
+
+<!-- ══════════════ SCRIPTS ══════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ───────────────────────────────────────────────
+   CONFIG — change these two lines and you're live
+   ─────────────────────────────────────────────── */
+const BOOKING_URL   = "https://cal.com/sara-rocchietti-xlis94/30min";   // ← your Cal.com / Calendly link
+const CONTACT_EMAIL = "rocchietti.studio@gmail.com";                     // ← your email
+
+document.querySelectorAll('[data-book]').forEach(function (el) {
+  el.href = BOOKING_URL; el.target = '_blank'; el.rel = 'noopener';
+});
+document.querySelectorAll('[data-email]').forEach(function (el) {
+  el.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('Project enquiry — Rocchietti Studio');
+});
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ───────────────────────────────────────────────
+   Animations
+   ─────────────────────────────────────────────── */
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Highlighter sweeps — the brand device, so they always run (instant if reduced)
+document.querySelectorAll('.hl').forEach(function (el, i) {
+  if (reduced) { el.classList.add('is-on'); return; }
+  ScrollTrigger.create({
+    trigger: el, start: 'top 90%', once: true,
+    onEnter: function () { gsap.delayedCall(.15 + i * .04, function () { el.classList.add('is-on'); }); }
+  });
+});
+
+if (!reduced) {
+  // First screen: staggered entrance, no scroll needed
+  gsap.from('#packages [data-reveal]', {
+    opacity: 0, y: 26, duration: .85, ease: 'power3.out', stagger: .09, delay: .12
+  });
+
+  // Grouped reveals stagger together
+  gsap.utils.toArray('[data-reveal-group]').forEach(function (group) {
+    if (group.closest('#packages')) return;              // handled by the entrance above
+    gsap.from(group.querySelectorAll('[data-reveal]'), {
+      opacity: 0, y: 30, duration: .8, ease: 'power3.out', stagger: .09,
+      scrollTrigger: { trigger: group, start: 'top 82%', once: true }
+    });
+  });
+
+  // Everything else reveals on its own
+  gsap.utils.toArray('[data-reveal]').forEach(function (el) {
+    if (el.closest('[data-reveal-group]') || el.closest('#packages')) return;
+    gsap.from(el, {
+      opacity: 0, y: 26, duration: .8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+    });
+  });
+
+  // Floating confetti dots
+  gsap.utils.toArray('.floater').forEach(function (el, i) {
+    gsap.to(el, {
+      y: '+=14', x: '+=6', rotation: '+=6',
+      duration: 2.6 + (i % 3) * .5, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .25
+    });
+  });
+}
+</script>
+</body>
+</html>
