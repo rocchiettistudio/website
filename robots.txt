@@ -1,0 +1,5 @@
+# The packages page is public. /admin and every /q/<slug> proposal send
+# X-Robots-Tag: noindex — they are deliberately crawlable-but-not-indexable,
+# because a Disallow here would stop crawlers from ever reading that header.
+User-agent: *
+Allow: /

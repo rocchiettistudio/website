@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — Rocchietti Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Caveat+Brush&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#3E2A21;--brown:#5C3A2E;--cream:#FDFBF6;--grid:#D3DDF2;--lemon:#F8E7A1;--peri:#C7D0EE}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Quicksand,ui-sans-serif,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:26px 26px}
+  a{color:inherit}
+  .wrap{max-width:960px;margin:0 auto;padding:24px 18px 80px}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:10px 18px;background:rgba(253,251,246,.92);border:1.5px solid var(--ink);border-radius:999px;margin-bottom:28px}
+  .logo{display:flex;align-items:center;text-decoration:none}
+  .logo img{height:34px;width:auto;mix-blend-mode:multiply}
+  .logo-fallback{display:none;flex-direction:column;line-height:1;color:var(--brown);font-family:Caveat,cursive}
+  .logo-fallback b{font-size:24px;font-weight:600}
+  .logo-fallback i{font-size:11px;font-style:normal;letter-spacing:.3em;padding-left:2px}
+  .bar-right{display:flex;align-items:center;gap:14px}
+  .tag{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(62,42,33,.55)}
+
+  .card{background:#fff;border:1.5px solid var(--ink);border-radius:22px;box-shadow:6px 6px 0 var(--lemon);padding:22px}
+  .card+.card{margin-top:18px}
+  .card h2{margin:0 0 16px;font-family:"Caveat Brush",Caveat,cursive;font-weight:400;font-size:24px;color:var(--brown)}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:999px;
+    font:inherit;font-size:14.5px;font-weight:600;border:1.5px solid var(--ink);cursor:pointer;text-decoration:none;
+    background:#fff;color:var(--ink);transition:transform .18s,box-shadow .18s}
+  .btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--peri)}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn-primary{background:var(--brown);color:var(--cream);box-shadow:4px 4px 0 var(--lemon)}
+  .btn-primary:hover:not(:disabled){box-shadow:7px 7px 0 var(--lemon)}
+  .btn-sm{padding:7px 14px;font-size:13px;border-radius:999px}
+  .btn-danger{border-color:#9B3B2E;color:#9B3B2E}
+  .btn-plain{border-color:transparent;background:transparent;padding:7px 10px;font-size:13.5px;color:rgba(62,42,33,.7)}
+  .btn-plain:hover{transform:none;box-shadow:none;color:var(--ink);text-decoration:underline}
+
+  label{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(62,42,33,.6);margin-bottom:6px}
+  input,textarea,select{width:100%;padding:11px 14px;border:1.5px solid rgba(62,42,33,.25);border-radius:14px;
+    background:#fff;color:var(--ink);font:inherit;font-size:15px}
+  textarea{min-height:96px;resize:vertical;line-height:1.6}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--brown);box-shadow:0 0 0 3px rgba(199,208,238,.5)}
+  .field{margin-bottom:16px}
+  .grid2{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+  .grid3{display:grid;gap:16px;grid-template-columns:1fr 1fr 1fr}
+  .hint{margin:6px 0 0;font-size:12.5px;color:rgba(62,42,33,.55);text-transform:none;letter-spacing:0;font-weight:500}
+
+  .modes{display:flex;gap:10px;flex-wrap:wrap}
+  .mode{flex:1;min-width:200px;display:flex;gap:10px;align-items:flex-start;padding:14px;border:1.5px solid rgba(62,42,33,.25);
+    border-radius:16px;cursor:pointer;background:#fff}
+  .mode.on{border-color:var(--ink);background:#F6F8FE;box-shadow:4px 4px 0 var(--peri)}
+  .mode input{width:auto;margin-top:3px}
+  .mode b{display:block;font-size:14.5px}
+  .mode span{font-size:12.5px;color:rgba(62,42,33,.6);line-height:1.45}
+
+  .item{border:1.5px solid rgba(62,42,33,.2);border-radius:18px;padding:16px;margin-bottom:14px;background:#FCFCFE}
+  .item-head{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+  .item-num{font-family:"Caveat Brush",Caveat,cursive;font-size:22px;color:var(--brown);min-width:26px}
+  .item-tools{margin-left:auto;display:flex;gap:4px}
+
+  .rows{display:flex;flex-direction:column;gap:12px}
+  .row-q{display:flex;gap:16px;align-items:center;padding:16px;border:1.5px solid var(--ink);border-radius:18px;background:#fff}
+  .row-q:hover{box-shadow:4px 4px 0 var(--peri)}
+  .row-main{min-width:0;flex:1}
+  .row-title{margin:0;font-size:16px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .row-meta{margin:4px 0 0;font-size:13px;color:rgba(62,42,33,.6)}
+  .row-total{font-size:17px;font-weight:700;white-space:nowrap}
+  .row-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;border:1.5px solid var(--ink)}
+  .pill.draft{background:#fff;color:rgba(62,42,33,.6)}
+  .pill.published{background:var(--lemon)}
+
+  .totals{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:6px 0;font-size:15px}
+  .totals.big{margin-top:10px;padding-top:14px;border-top:1.5px solid rgba(62,42,33,.15);font-size:18px;font-weight:600}
+  .totals.big span:last-child{font-size:28px;font-weight:700}
+
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:50;
+    padding:12px 22px;border-radius:999px;border:1.5px solid var(--ink);background:var(--brown);color:var(--cream);
+    font-size:14.5px;font-weight:600;box-shadow:4px 4px 0 var(--lemon);opacity:0;pointer-events:none;transition:opacity .25s}
+  .toast.on{opacity:1}
+  .toast.bad{background:#9B3B2E}
+
+  .center{max-width:400px;margin:12vh auto 0}
+  .empty{text-align:center;padding:40px 10px;color:rgba(62,42,33,.6)}
+  .sticky{position:sticky;bottom:14px;margin-top:22px;padding:14px;background:rgba(253,251,246,.94);
+    border:1.5px solid var(--ink);border-radius:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+    backdrop-filter:blur(6px)}
+  .sticky .spacer{flex:1}
+  [hidden]{display:none!important}
+  @media (max-width:640px){
+    .grid2,.grid3{grid-template-columns:1fr}
+    .row-q{flex-direction:column;align-items:stretch}
+    .row-actions{justify-content:flex-start}
+  }
+</style>
+
+<script>
+  /* Defined in <head> so it exists before the <img onerror> can fire. */
+  function logoFallback(img){
+    img.style.display = 'none';
+    var f = img.parentElement.querySelector('.logo-fallback');
+    if (f) f.style.display = 'flex';
+  }
+</script>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="bar">
+    <a class="logo" href="/">
+      <img src="assets/rocchietti-logo.png" alt="Rocchietti Studio" onerror="logoFallback(this)">
+      <span class="logo-fallback"><b>Rocchietti</b><i>&#10035; studio &#10035;</i></span>
+    </a>
+    <div class="bar-right">
+      <span class="tag">Admin</span>
+      <button id="logout" class="btn btn-sm" hidden>Log out</button>
+    </div>
+  </div>
+
+  <!-- ── LOGIN ───────────────────────────────────────────── -->
+  <section id="view-login" hidden>
+    <div class="center">
+      <div class="card">
+        <h2>Sign in</h2>
+        <form id="login-form">
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" autocomplete="current-password" required>
+          </div>
+          <button class="btn btn-primary" style="width:100%" type="submit">Enter</button>
+        </form>
+        <p id="login-error" class="hint" style="color:#9B3B2E;margin-top:14px" hidden></p>
+        <p id="login-setup" class="hint" style="margin-top:14px" hidden>
+          Admin is not configured yet. Add <code>ADMIN_PASSWORD</code> and <code>SESSION_SECRET</code>
+          in the Vercel project settings, then redeploy.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DASHBOARD ───────────────────────────────────────── -->
+  <section id="view-dash" hidden>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap">
+      <h1 style="margin:0;font-size:30px;letter-spacing:-.02em">Quotes</h1>
+      <div style="flex:1"></div>
+      <button id="new-quote" class="btn btn-primary">+ New quote</button>
+    </div>
+    <div id="list" class="rows"></div>
+    <div id="list-empty" class="empty" hidden>
+      <p>No quotes yet. Make the first one — it takes a couple of minutes.</p>
+    </div>
+  </section>
+
+  <!-- ── EDITOR ──────────────────────────────────────────── -->
+  <section id="view-editor" hidden>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+      <button id="back" class="btn btn-plain">&larr; All quotes</button>
+      <div style="flex:1"></div>
+      <span id="editor-status" class="pill draft">Draft</span>
+      <a id="editor-link" class="btn btn-sm" target="_blank" rel="noopener" hidden>Open page &nearr;</a>
+    </div>
+
+    <div class="card">
+      <h2>Client</h2>
+      <div class="grid3">
+        <div class="field"><label for="f-client-name">Name</label><input id="f-client-name" placeholder="Sara Bianchi"></div>
+        <div class="field"><label for="f-client-company">Company</label><input id="f-client-company" placeholder="Bianchi Studio"></div>
+        <div class="field"><label for="f-client-email">Email</label><input id="f-client-email" type="email" placeholder="sara@example.com"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Header</h2>
+      <div class="field"><label for="f-eyebrow">Eyebrow</label><input id="f-eyebrow" placeholder="Rocchietti Studio · Proposal"></div>
+      <div class="field"><label for="f-title">Title</label><input id="f-title" placeholder="Brand identity for Bianchi Studio"></div>
+      <div class="field"><label for="f-intro">Intro</label><textarea id="f-intro" placeholder="A couple of lines on what you understood and what you are proposing."></textarea>
+        <p class="hint">Leave a blank line between paragraphs.</p></div>
+    </div>
+
+    <div class="card">
+      <h2>Services</h2>
+      <div class="field">
+        <label>How the price works</label>
+        <div class="modes">
+          <label class="mode" id="mode-sum-label">
+            <input type="radio" name="pricing" value="sum" id="mode-sum">
+            <span><b>Sum of the services</b><span>Each line shows its own price, the total adds them up.</span></span>
+          </label>
+          <label class="mode" id="mode-total-label">
+            <input type="radio" name="pricing" value="total" id="mode-total">
+            <span><b>One total price</b><span>Services are listed without prices, you set the total by hand.</span></span>
+          </label>
+        </div>
+      </div>
+
+      <div id="items"></div>
+      <button id="add-item" class="btn btn-sm" type="button">+ Add service</button>
+    </div>
+
+    <div class="card">
+      <h2>Total</h2>
+      <div class="grid3">
+        <div class="field"><label for="f-currency">Currency</label>
+          <select id="f-currency"><option value="EUR">EUR €</option><option value="GBP">GBP £</option><option value="USD">USD $</option></select>
+        </div>
+        <div class="field" id="wrap-fixed-total"><label for="f-fixed-total">Total price</label><input id="f-fixed-total" type="number" min="0" step="1" placeholder="1990"></div>
+        <div class="field"><label for="f-total-label">Label</label><input id="f-total-label" placeholder="Total"></div>
+      </div>
+
+      <div class="grid3">
+        <div class="field"><label for="f-discount-type">Discount</label>
+          <select id="f-discount-type"><option value="amount">Fixed amount</option><option value="percent">Percentage</option></select>
+        </div>
+        <div class="field"><label for="f-discount-value">Value</label><input id="f-discount-value" type="number" min="0" step="1" placeholder="0"></div>
+        <div class="field"><label for="f-discount-label">Discount label</label><input id="f-discount-label" placeholder="Launch Kit credit"></div>
+      </div>
+
+      <div class="field"><label for="f-payment">Payment terms</label><input id="f-payment" placeholder="50% to start, 50% on delivery"></div>
+
+      <div style="border-top:1.5px dashed rgba(62,42,33,.25);margin-top:8px;padding-top:14px">
+        <div class="totals muted" id="preview-subtotal-row"><span>Subtotal</span><span id="preview-subtotal">—</span></div>
+        <div class="totals muted" id="preview-discount-row" hidden><span id="preview-discount-label">Discount</span><span id="preview-discount">—</span></div>
+        <div class="totals big"><span id="preview-total-label">Total</span><span id="preview-total">—</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Notes &amp; validity</h2>
+      <div class="field"><label for="f-notes">Notes</label><textarea id="f-notes" placeholder="Anything the client should read before saying yes."></textarea></div>
+      <div class="grid2">
+        <div class="field"><label for="f-valid">Valid until</label><input id="f-valid" type="date"></div>
+        <div class="field"><label for="f-footer-note">Footer note</label><input id="f-footer-note" placeholder="Prices exclude VAT."></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Call to action</h2>
+      <div class="field"><label for="f-cta-heading">Heading</label><input id="f-cta-heading" placeholder="Shall we start?"></div>
+      <div class="field"><label for="f-cta-body">Body</label><textarea id="f-cta-body" placeholder="Book a call or reply by email — whichever is easier."></textarea></div>
+      <div class="grid2">
+        <div class="field"><label for="f-cta-book-label">Button label</label><input id="f-cta-book-label" placeholder="Book a call"></div>
+        <div class="field"><label for="f-cta-book-url">Booking link</label><input id="f-cta-book-url" placeholder="https://cal.com/..."></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label for="f-cta-email-label">Email label</label><input id="f-cta-email-label" placeholder="Send an email"></div>
+        <div class="field"><label for="f-cta-email">Email address</label><input id="f-cta-email" type="email" placeholder="rocchietti.studio@gmail.com"></div>
+      </div>
+    </div>
+
+    <div class="sticky">
+      <button id="save" class="btn" type="button">Save draft</button>
+      <button id="publish" class="btn btn-primary" type="button">Publish</button>
+      <button id="unpublish" class="btn" type="button" hidden>Unpublish</button>
+      <span class="spacer"></span>
+      <button id="copy-link" class="btn btn-sm" type="button" hidden>Copy client link</button>
+      <button id="delete" class="btn btn-sm btn-danger" type="button" hidden>Delete</button>
+    </div>
+  </section>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="admin.js"></script>
+</body>
+</html>

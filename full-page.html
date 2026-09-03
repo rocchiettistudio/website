@@ -126,7 +126,10 @@
     background-size:22px 22px;
   }
 
-  .logo-mark{ mix-blend-mode:multiply; }
+  /* Real logo asset. The height is set here as well as in the utility classes so
+     the image can never flash at full size while the Tailwind CDN is still loading. */
+  .logo-mark{ mix-blend-mode:multiply; height:40px; width:auto; }
+  @media (min-width:640px){ .logo-mark{ height:52px; } }
 
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior:auto; }
@@ -137,7 +140,7 @@
 
 <script>
   function logoFallback(img){
-    if (!img.dataset.triedPng) { img.dataset.triedPng = '1'; img.src = 'assets/rocchietti-logo.png'; return; }
+    if (!img.dataset.triedSvg) { img.dataset.triedSvg = '1'; img.src = 'assets/rocchietti-logo.svg'; return; }
     img.style.display = 'none';
     var f = img.parentElement.querySelector('.logo-fallback');
     if (f) { f.classList.remove('hidden'); f.classList.add('flex'); }
@@ -153,8 +156,8 @@
     <nav class="flex items-center justify-between gap-4 rounded-full border-[1.5px] border-ink/90 bg-cream/85 backdrop-blur-md px-4 sm:px-5 py-2.5 shadow-[0_2px_0_rgba(62,42,33,.12)]">
 
       <a href="#top" class="shrink-0" aria-label="Rocchietti Studio — home">
-        <img src="assets/rocchietti-logo.svg" alt="Rocchietti Studio"
-             class="logo-mark h-9 sm:h-11 w-auto" onerror="logoFallback(this)">
+        <img src="assets/rocchietti-logo.png" alt="Rocchietti Studio"
+             class="logo-mark h-10 sm:h-[52px] w-auto" onerror="logoFallback(this)">
         <span class="logo-fallback hidden flex-col items-start leading-none">
           <span class="font-script text-[26px] sm:text-[30px] text-brown -mb-1.5 tracking-tight">Rocchietti</span>
           <span class="font-script text-[12px] sm:text-[13px] text-brown/80 tracking-[.35em] pl-1">✳ studio ✳</span>
@@ -838,7 +841,7 @@
   <div class="mx-auto max-w-6xl px-5">
     <div class="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
       <div class="shrink-0">
-        <img src="assets/rocchietti-logo.svg" alt="Rocchietti Studio"
+        <img src="assets/rocchietti-logo.png" alt="Rocchietti Studio"
              class="logo-mark h-12 w-auto" onerror="logoFallback(this)">
         <span class="logo-fallback hidden flex-col items-center sm:items-start leading-none">
           <span class="font-script text-[30px] text-brown -mb-1.5">Rocchietti</span>
