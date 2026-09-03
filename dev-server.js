@@ -155,6 +155,15 @@ async function runFunction(name, req, res, query) {
   await handler(req, asVercelResponse(res));
 }
 
+function serveFile(res, abs) {
+  if (!fs.existsSync(abs) || fs.statSync(abs).isDirectory()) {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    return res.end('404 — not found');
+  }
+  res.writeHead(200, { 'Content-Type': MIME[path.extname(abs)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
+  res.end(fs.readFileSync(abs));
+}
+
 http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
   const pathname = decodeURIComponent(url.pathname);
@@ -163,18 +172,19 @@ http.createServer(async (req, res) => {
   try {
     if (pathname.startsWith('/api/')) return await runFunction(pathname.slice(5), req, res, query);
 
-    const quote = pathname.match(/^\/q\/([A-Za-z0-9_-]+)$/);      // the vercel.json rewrite
+    const quote = pathname.match(/^\/q\/([A-Za-z0-9_-]+)$/);      // the vercel.json rewrites
     if (quote) return await runFunction('quote', req, res, Object.assign({ slug: quote[1] }, query));
+    if (pathname === '/') return await runFunction('home', req, res, query);
+    if (pathname === '/_source') return serveFile(res, path.join(ROOT, 'index.html'));
 
-    let file = pathname === '/' ? '/index.html' : pathname;
+    let file = pathname;
     if (!path.extname(file)) file += '.html';                     // cleanUrls
     const abs = path.join(ROOT, path.normalize(file));
-    if (!abs.startsWith(ROOT) || !fs.existsSync(abs) || fs.statSync(abs).isDirectory()) {
-      res.writeHead(404, { 'Content-Type': 'text/plain' });
-      return res.end('404 — not found');
+    if (!abs.startsWith(ROOT)) {
+      res.writeHead(403, { 'Content-Type': 'text/plain' });
+      return res.end('403 — forbidden');
     }
-    res.writeHead(200, { 'Content-Type': MIME[path.extname(abs)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
-    res.end(fs.readFileSync(abs));
+    return serveFile(res, abs);
   } catch (err) {
     console.error(req.method + ' ' + pathname + ' failed:', err);
     if (!res.headersSent) res.writeHead(500, { 'Content-Type': 'text/plain' });

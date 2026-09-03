@@ -96,6 +96,19 @@
     border:1.5px solid var(--ink);border-radius:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;
     backdrop-filter:blur(6px)}
   .sticky .spacer{flex:1}
+  .tabs{display:flex;gap:4px;padding:3px;border:1.5px solid rgba(62,42,33,.2);border-radius:999px;background:#fff}
+  .tab{padding:6px 16px;border:0;border-radius:999px;background:transparent;font:inherit;font-size:13.5px;
+    font-weight:600;color:rgba(62,42,33,.6);cursor:pointer}
+  .tab.on{background:var(--brown);color:var(--cream)}
+
+  .field-head{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+  .field-head label{margin:0}
+  .edited{padding:2px 8px;border-radius:999px;background:var(--lemon);border:1.5px solid var(--ink);
+    font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .reset{margin-left:auto;border:0;background:none;padding:0;font:inherit;font-size:12px;font-weight:600;
+    color:rgba(62,42,33,.55);cursor:pointer;text-transform:none;letter-spacing:0}
+  .reset:hover{color:#9B3B2E;text-decoration:underline}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;line-height:1.7}
   [hidden]{display:none!important}
   @media (max-width:640px){
     .grid2,.grid3{grid-template-columns:1fr}
@@ -122,8 +135,11 @@
       <img src="assets/rocchietti-logo.png" alt="Rocchietti Studio" onerror="logoFallback(this)">
       <span class="logo-fallback"><b>Rocchietti</b><i>&#10035; studio &#10035;</i></span>
     </a>
+    <nav id="tabs" class="tabs" hidden>
+      <button class="tab on" data-view="dash" type="button">Quotes</button>
+      <button class="tab" data-view="content" type="button">Homepage</button>
+    </nav>
     <div class="bar-right">
-      <span class="tag">Admin</span>
       <button id="logout" class="btn btn-sm" hidden>Log out</button>
     </div>
   </div>
@@ -265,6 +281,28 @@
       <span class="spacer"></span>
       <button id="copy-link" class="btn btn-sm" type="button" hidden>Copy client link</button>
       <button id="delete" class="btn btn-sm btn-danger" type="button" hidden>Delete</button>
+    </div>
+  </section>
+
+  <!-- ── HOMEPAGE COPY ───────────────────────────────────── -->
+  <section id="view-content" hidden>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px;flex-wrap:wrap">
+      <h1 style="margin:0;font-size:30px;letter-spacing:-.02em">Homepage</h1>
+      <div style="flex:1"></div>
+      <a class="btn btn-sm" href="/" target="_blank" rel="noopener">View the site &nearr;</a>
+    </div>
+    <p class="hint" style="margin:0 0 22px;max-width:640px">
+      Change any of the words on the public page. Nothing goes live until you press Save,
+      and every field can be put back to how it started.
+    </p>
+
+    <div id="content-groups"></div>
+
+    <div class="sticky">
+      <button id="content-save" class="btn btn-primary" type="button">Save changes</button>
+      <span id="content-count" class="hint" style="margin:0"></span>
+      <span class="spacer"></span>
+      <button id="content-reset-all" class="btn btn-sm btn-danger" type="button" hidden>Reset the whole page</button>
     </div>
   </section>
 

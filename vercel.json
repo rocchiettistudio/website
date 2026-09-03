@@ -5,7 +5,12 @@
   "redirects": [
     { "source": "/full-page", "destination": "/", "permanent": false }
   ],
+  "functions": {
+    "api/home.js": { "includeFiles": "index.html" }
+  },
   "rewrites": [
+    { "source": "/", "destination": "/api/home" },
+    { "source": "/_source", "destination": "/index.html" },
     { "source": "/q/:slug", "destination": "/api/quote?slug=:slug" }
   ],
   "headers": [

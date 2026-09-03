@@ -48,7 +48,9 @@ const BOOKING_URL   = "https://cal.com/sara-rocchietti-xlis94/30min";
 const CONTACT_EMAIL = "rocchietti.studio@gmail.com";
 ```
 
-Every "Book a call" button reads from those two constants — change them there, nowhere else.
+Every "Book a call" button reads from those two constants. Once the site is deployed you can change
+both from **Admin → Homepage → Links** without touching the file; the constants stay as the fallback
+for when the page is opened straight off disk.
 
 ### 3. Only for `full-page.html`
 
@@ -99,6 +101,43 @@ card and under the comparison table. Every package note says the project starts 
 call and a quote built on request. No VAT wording anywhere; the footer states a 30-day validity.
 
 ---
+
+## Editing the homepage copy
+
+Every word on `index.html` can be changed from **Admin → Homepage**, saved, and it is live within the
+minute — no deploy, no editing HTML.
+
+**How it works.** Each editable piece of the page is marked in `index.html` with a `data-cms="<key>"`
+attribute. `vercel.json` rewrites `/` to `api/home.js`, which reads the page, swaps the inside of
+those elements for whatever was saved, and serves the result. Only fields you have actually changed
+are stored, so anything you have not touched still comes straight from `index.html`.
+
+`api/_schema.js` lists all 51 fields — where each one lives, how it renders, and the text that
+reproduces the markup in the page today. **If you edit `index.html` by hand, update the matching
+`default` there too**, or the dashboard will keep offering the old copy.
+
+**What you type.** Plain text, never HTML — anything that looks like a tag is escaped, so nothing
+typed in the dashboard can break the page. Two conventions survive:
+
+| You write | You get |
+|---|---|
+| `*word*` | the brush highlight in a title, **bold** anywhere else |
+| `\|` | the column separator in a price row, a table row or a terms line |
+| one per line | one bullet, one add-on, one table row |
+
+The comparison table takes `package \| price \| timeline \| revisions` per line; start a row with `+`
+to give it the highlighted background.
+
+**Nothing is destructive.** Every field has a *Reset* that puts the original text back, and
+*Reset the whole page* clears all of it at once. Because the original lives in `index.html` rather
+than in the database, an empty database means the site shows exactly the page in this repository —
+which is also what happens if Upstash is unreachable.
+
+**Two caveats.** Edits are cached at the CDN for 60 seconds, so give the page a moment before
+worrying. And `/` is a serverless function now; the untouched static file is still served at
+`/_source`, which is also where `api/home.js` falls back to if it cannot read `index.html` from
+its own bundle.
+
 
 ## The quote tool
 
